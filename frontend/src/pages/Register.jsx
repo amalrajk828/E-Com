@@ -56,7 +56,7 @@ function Register() {
             <div className="register-card">
 
                 <div className="register-left">
-                    <h1>Join TechNova</h1>
+                    <h1>Join SmartBuy</h1>
 
                     <p>
                         Create your account and
