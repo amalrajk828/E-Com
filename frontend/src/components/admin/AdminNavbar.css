@@ -1,0 +1,45 @@
+.admin-navbar {
+    width: 100%;
+    height: 65px;
+    background: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.admin-logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #38bdf8;
+}
+
+.admin-menu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.admin-menu a {
+    text-decoration: none;
+    color: #cbd5e1;
+    font-size: 15px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.admin-menu a:hover {
+    background: #1e293b;
+    color: white;
+}
+
+.active-link {
+    background: #38bdf8;
+    color: black !important;
+    font-weight: 600;
+}   
