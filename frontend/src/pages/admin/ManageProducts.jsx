@@ -8,10 +8,7 @@ function ManageProducts() {
 
     const [products, setProducts] = useState([])
 
-    useEffect(() => {
-        fetchProducts()
-    }, [])
-
+    // ✅ 1. define function FIRST
     const fetchProducts = async () => {
         try {
             const { data } = await api.get('/products')
@@ -20,6 +17,11 @@ function ManageProducts() {
             console.log(error)
         }
     }
+
+    // ✅ 2. useEffect AFTER
+    useEffect(() => {
+        fetchProducts()
+    }, [])
 
     const deleteProduct = async (id) => {
         try {
@@ -31,7 +33,6 @@ function ManageProducts() {
     }
 
     return (
-
         <div>
 
             <AdminNavbar />
@@ -42,10 +43,7 @@ function ManageProducts() {
 
                     <h1>Products</h1>
 
-                    <Link
-                        to="/admin/products/add"
-                        className="add-btn"
-                    >
+                    <Link to="/admin/products/add" className="add-btn">
                         + Add Product
                     </Link>
 
@@ -58,10 +56,7 @@ function ManageProducts() {
                         <div key={product._id} className="product-row">
 
                             <div className="img-box">
-                                <img
-                                    src={product.images?.[0]}
-                                    alt=""
-                                />
+                                <img src={product.images?.[0]} alt="" />
                             </div>
 
                             <div className="info">
@@ -71,7 +66,9 @@ function ManageProducts() {
 
                             <div className="stock">
                                 <span className={product.stock > 0 ? "in" : "out"}>
-                                    {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
+                                    {product.stock > 0
+                                        ? `${product.stock} in stock`
+                                        : "Out of stock"}
                                 </span>
                             </div>
 

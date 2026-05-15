@@ -1,48 +1,29 @@
-import { useEffect, useState }
-from 'react'
+import { useEffect, useState } from 'react'
 
 import AdminNavbar from '../../components/admin/AdminNavbar'
-
-import StatCard
-from '../../components/admin/StatCard'
-
-import api
-from '../../services/api'
+import StatCard from '../../components/admin/StatCard'
+import api from '../../services/api'
 
 function Dashboard() {
 
-    const [stats,
-        setStats] =
-        useState({})
+    const [stats, setStats] = useState({})
 
-    useEffect(() => {
-
-        fetchDashboard()
-
-    }, [])
-
-    const fetchDashboard =
-        async () => {
-
+    // ✅ 1. define function FIRST
+    const fetchDashboard = async () => {
         try {
-
-            const {
-                data
-            } =
-                await api.get(
-                    '/admin/dashboard'
-                )
-
+            const { data } = await api.get('/admin/dashboard')
             setStats(data)
-
         } catch (error) {
-
             console.log(error)
         }
     }
 
-    return (
+    // ✅ 2. useEffect AFTER
+    useEffect(() => {
+        fetchDashboard()
+    }, [])
 
+    return (
         <div className="flex">
 
             <AdminNavbar />
