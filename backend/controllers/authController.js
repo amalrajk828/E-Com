@@ -35,7 +35,11 @@ const register = async (req, res) => {
             user,
             token
         })
-
+        return res.status(201).json({
+            success: true,
+            user,
+            token
+        })
     } catch (error) {
 
         res.status(500).json({
