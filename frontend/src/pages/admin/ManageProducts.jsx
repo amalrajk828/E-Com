@@ -20,8 +20,17 @@ function ManageProducts() {
 
     // ✅ 2. useEffect AFTER
     useEffect(() => {
-        fetchProducts()
-    }, [])
+    const loadProducts = async () => {
+        try {
+            const { data } = await api.get('/products')
+            setProducts(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    loadProducts()
+}, [])
 
     const deleteProduct = async (id) => {
         try {

@@ -20,7 +20,16 @@ function Dashboard() {
 
     // ✅ 2. useEffect AFTER
     useEffect(() => {
-        fetchDashboard()
+    const loadDashboard = async () => {
+    try {
+            const { data } = await api.get('/admin/dashboard')
+            setStats(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+        loadDashboard()
     }, [])
 
     return (
