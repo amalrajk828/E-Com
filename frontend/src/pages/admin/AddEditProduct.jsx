@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AdminNavbar from '../../components/admin/AdminNavbar'
 import api from '../../services/api'
@@ -7,7 +7,7 @@ import './AddEditProduct.css'
 function AddEditProduct() {
 
     const navigate = useNavigate()
-    const { id } = useParams()   // 👈 important
+    const { id } = useParams()
     const isEdit = Boolean(id)
 
     const [form, setForm] = useState({
@@ -20,14 +20,8 @@ function AddEditProduct() {
         images: ['']
     })
 
-    // ---------------- FETCH PRODUCT (EDIT MODE) ----------------
-    useEffect(() => {
-        if (isEdit) {
-            fetchProduct()
-        }
-    }, [id])
-
-    const fetchProduct = async () => {
+    // ---------------- FETCH PRODUCT ----------------
+    const fetchProduct = useCallback(async () => {
         try {
             const res = await api.get(`/products/${id}`)
             const p = res.data
@@ -45,26 +39,38 @@ function AddEditProduct() {
         } catch (err) {
             console.log(err)
         }
-    }
+    }, [id])
+
+    useEffect(() => {
+        if (isEdit && id) {
+            fetchProduct()
+        }
+    }, [isEdit, id, fetchProduct])
 
     // ---------------- HANDLERS ----------------
     const changeHandler = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value })
+        setForm(prev => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }))
     }
 
     const imageHandler = (e) => {
-        setForm({ ...form, images: [e.target.value] })
+        setForm(prev => ({
+            ...prev,
+            images: [e.target.value]
+        }))
     }
 
-    // ---------------- SUBMIT (CREATE OR UPDATE) ----------------
+    // ---------------- SUBMIT ----------------
     const submitHandler = async (e) => {
         e.preventDefault()
 
         try {
             if (isEdit) {
-                await api.put(`/products/${id}`, form)   // 👈 UPDATE
+                await api.put(`/products/${id}`, form)
             } else {
-                await api.post('/products', form)         // 👈 CREATE
+                await api.post('/products', form)
             }
 
             navigate('/admin/products')
@@ -79,7 +85,6 @@ function AddEditProduct() {
             <AdminNavbar />
 
             <div className="admin-layout">
-
                 <div className="admin-content">
 
                     <h1 className="page-title">
