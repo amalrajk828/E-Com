@@ -8,7 +8,7 @@ function Dashboard() {
 
     const [stats, setStats] = useState({})
 
-    // ✅ 1. define function FIRST
+    // ✅ SINGLE CLEAN FUNCTION
     const fetchDashboard = async () => {
         try {
             const { data } = await api.get('/admin/dashboard')
@@ -18,18 +18,9 @@ function Dashboard() {
         }
     }
 
-    // ✅ 2. useEffect AFTER
+    // ✅ USE EFFECT
     useEffect(() => {
-    const loadDashboard = async () => {
-    try {
-            const { data } = await api.get('/admin/dashboard')
-            setStats(data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-        loadDashboard()
+        fetchDashboard()
     }, [])
 
     return (

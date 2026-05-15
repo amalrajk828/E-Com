@@ -8,7 +8,7 @@ function ManageProducts() {
 
     const [products, setProducts] = useState([])
 
-    // ✅ 1. define function FIRST
+    // ✅ SINGLE CLEAN FUNCTION
     const fetchProducts = async () => {
         try {
             const { data } = await api.get('/products')
@@ -18,19 +18,10 @@ function ManageProducts() {
         }
     }
 
-    // ✅ 2. useEffect AFTER
+    // ✅ USE EFFECT
     useEffect(() => {
-    const loadProducts = async () => {
-        try {
-            const { data } = await api.get('/products')
-            setProducts(data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    loadProducts()
-}, [])
+        fetchProducts()
+    }, [])
 
     const deleteProduct = async (id) => {
         try {
