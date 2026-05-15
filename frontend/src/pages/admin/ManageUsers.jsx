@@ -7,21 +7,37 @@ function ManageUsers() {
 
     const [users, setUsers] = useState([])
 
-    const fetchUsers = async () => {
-        const res = await api.get('/admin/users')
-        setUsers(res.data)
-    }
-
+    // ---------------- LOAD USERS ----------------
     useEffect(() => {
-        fetchUsers()
+
+        const loadUsers = async () => {
+            try {
+                const res = await api.get('/admin/users')
+                setUsers(res.data)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        loadUsers()
+
     }, [])
 
+    // ---------------- DELETE USER ----------------
     const deleteUser = async (id) => {
-        await api.delete(`/admin/users/${id}`)
-        fetchUsers()
+        try {
+            await api.delete(`/admin/users/${id}`)
+
+            // refresh list safely
+            const res = await api.get('/admin/users')
+            setUsers(res.data)
+
+        } catch (err) {
+            console.log(err)
+        }
     }
 
-    // ❌ FILTER OUT ADMINS
+    // ---------------- FILTER ADMINS ----------------
     const filteredUsers = users.filter(user => user.role !== 'admin')
 
     return (
@@ -59,7 +75,6 @@ function ManageUsers() {
                                     {filteredUsers.map(user => (
                                         <tr key={user._id}>
                                             <td className="name-cell">{user.name}</td>
-
                                             <td className="email-cell">{user.email}</td>
 
                                             <td>
