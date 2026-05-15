@@ -44,15 +44,12 @@ app.use('/api/products', productRoutes)
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
-    console.log('MongoDB Connected')
+    console.log("MongoDB Connected")
+
+    app.listen(PORT, () => {
+        console.log(`Server Running on Port ${PORT}`)
+    })
 })
 .catch((err) => {
-    console.log(err)
-})
-
-// Server
-const PORT = process.env.PORT || 5000
-
-app.listen(PORT, () => {
-    console.log(`Server Running on Port ${PORT}`)
+    console.log("MongoDB Connection Error:", err.message)
 })
