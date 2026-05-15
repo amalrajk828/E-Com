@@ -1,19 +1,20 @@
 /* layout */
 .admin-layout {
     width: 100%;
-    display: flex;
-    background: #f4f6fb;
     min-height: 100vh;
+    display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 30px;
+    align-items: flex-start;
+    background: #f4f6fb;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .admin-content {
     width: 100%;
+    max-width: 1100px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
@@ -23,15 +24,18 @@
     font-weight: 700;
     margin-bottom: 25px;
     color: #111827;
+    text-align: center;
 }
 
 /* form card */
 .product-form {
+    width: 100%;
+    max-width: 900px;
     background: white;
     padding: 35px;
     border-radius: 18px;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.08);
-    max-width: 900px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
 }
 
 /* grid */
@@ -48,7 +52,7 @@
 }
 
 .form-group label {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: #374151;
     margin-bottom: 6px;
@@ -57,33 +61,40 @@
 /* inputs */
 .form-group input,
 .form-group textarea {
-    padding: 12px 14px;
+    width: 100%;
+    padding: 13px 14px;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     font-size: 14px;
     background: #f9fafb;
     outline: none;
     transition: 0.2s;
+    box-sizing: border-box;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     border-color: #2563eb;
     background: white;
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 /* textarea */
+.form-group.full {
+    margin-top: 20px;
+}
+
 .form-group.full textarea {
     min-height: 140px;
-    resize: none;
+    resize: vertical;
 }
 
 /* image preview */
 .preview-box {
-    margin-top: 20px;
-    width: 240px;
-    height: 240px;
+    margin: 20px auto 0;
+    width: 100%;
+    max-width: 280px;
+    height: 280px;
     border-radius: 14px;
     overflow: hidden;
     border: 1px solid #eee;
@@ -105,6 +116,7 @@
     border-radius: 12px;
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s;
@@ -112,16 +124,84 @@
 
 .submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(37,99,235,0.25);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
 }
 
-/* responsive */
+/* =========================
+   TABLET RESPONSIVE
+========================= */
+@media (max-width: 992px) {
+    .product-form {
+        padding: 28px;
+    }
+
+    .page-title {
+        font-size: 28px;
+    }
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
 @media (max-width: 768px) {
-    .admin-content {
-        margin-left: 0;
+    .admin-layout {
+        padding: 15px;
+    }
+
+    .product-form {
+        padding: 22px;
+        border-radius: 14px;
     }
 
     .form-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .page-title {
+        font-size: 24px;
+        margin-bottom: 18px;
+    }
+
+    .preview-box {
+        max-width: 220px;
+        height: 220px;
+    }
+
+    .submit-btn {
+        padding: 13px;
+        font-size: 14px;
+    }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+@media (max-width: 480px) {
+    .admin-layout {
+        padding: 10px;
+    }
+
+    .product-form {
+        padding: 16px;
+    }
+
+    .page-title {
+        font-size: 22px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 13px;
+        padding: 12px;
+    }
+
+    .preview-box {
+        max-width: 180px;
+        height: 180px;
+    }
+
+    .submit-btn {
+        font-size: 13px;
     }
 }
