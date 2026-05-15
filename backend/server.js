@@ -42,14 +42,18 @@ app.use('/api/auth', authRoutes)
 app.use('/api/products', productRoutes)
 
 // MongoDB Connection
+// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
-    console.log("MongoDB Connected")
+    console.log('MongoDB Connected');
+
+    const PORT = process.env.PORT || 5000;
 
     app.listen(PORT, () => {
-        console.log(`Server Running on Port ${PORT}`)
-    })
+        console.log(`Server Running on Port ${PORT}`);
+    });
+
 })
 .catch((err) => {
-    console.log("MongoDB Connection Error:", err.message)
-})
+    console.log('MongoDB Error:', err.message);
+});
