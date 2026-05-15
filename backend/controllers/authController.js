@@ -10,44 +10,46 @@ const register = async (req, res) => {
 
     try {
 
-        const { name, email, password } = req.body
+        const { name, email, password } = req.body;
 
-        const userExists = await User.findOne({ email })
+        const userExists = await User.findOne({ email });
 
         if (userExists) {
             return res.status(400).json({
+                success: false,
                 message: 'User already exists'
-            })
+            });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10)
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({
             name,
             email,
             password: hashedPassword
-        })
+        });
 
-        const token = generateToken(user._id)
+        const token = generateToken(user._id);
 
-        res.status(201).json({
-            success: true,
-            user,
-            token
-        })
         return res.status(201).json({
             success: true,
-            user,
+            message: 'Register successful',
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            },
             token
-        })
+        });
+
     } catch (error) {
 
-        res.status(500).json({
+        return res.status(500).json({
+            success: false,
             message: error.message
-        })
+        });
     }
-}
-
+};
 
 // Login
 const login = async (req, res) => {
