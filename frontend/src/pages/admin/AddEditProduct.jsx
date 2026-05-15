@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AdminNavbar from '../../components/admin/AdminNavbar'
 import api from '../../services/api'
@@ -21,61 +21,44 @@ function AddEditProduct() {
     })
 
     // ---------------- FETCH PRODUCT ----------------
-    const fetchProduct = useCallback(async () => {
-        try {
-            const res = await api.get(`/products/${id}`)
-            const p = res.data
-
-            setForm({
-                title: p.title || '',
-                description: p.description || '',
-                brand: p.brand || '',
-                category: p.category || '',
-                price: p.price || '',
-                stock: p.stock || '',
-                images: p.images?.length ? p.images : ['']
-            })
-
-        } catch (err) {
-            console.log(err)
-        }
-    }, [id])
-
     useEffect(() => {
-    if (!isEdit || !id) return
 
-    const loadProduct = async () => {
-        try {
-            const res = await api.get(`/products/${id}`)
-            const p = res.data
+        if (!isEdit || !id) return
 
-            setForm({
-                title: p.title || '',
-                description: p.description || '',
-                brand: p.brand || '',
-                category: p.category || '',
-                price: p.price || '',
-                stock: p.stock || '',
-                images: p.images?.length ? p.images : ['']
-            })
-        } catch (err) {
-            console.log(err)
+        const loadProduct = async () => {
+            try {
+                const res = await api.get(`/products/${id}`)
+                const p = res.data
+
+                setForm({
+                    title: p.title || '',
+                    description: p.description || '',
+                    brand: p.brand || '',
+                    category: p.category || '',
+                    price: p.price || '',
+                    stock: p.stock || '',
+                    images: p.images?.length ? p.images : ['']
+                })
+
+            } catch (err) {
+                console.log(err)
+            }
         }
-    }
 
-    loadProduct()
-}, [id, isEdit])
+        loadProduct()
+
+    }, [id, isEdit])
 
     // ---------------- HANDLERS ----------------
     const changeHandler = (e) => {
-        setForm(prev => ({
+        setForm((prev) => ({
             ...prev,
             [e.target.name]: e.target.value
         }))
     }
 
     const imageHandler = (e) => {
-        setForm(prev => ({
+        setForm((prev) => ({
             ...prev,
             images: [e.target.value]
         }))
