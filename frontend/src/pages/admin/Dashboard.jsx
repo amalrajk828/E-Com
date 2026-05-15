@@ -19,9 +19,18 @@ function Dashboard() {
     }
 
     // ✅ USE EFFECT
-    useEffect(() => {
-        fetchDashboard()
-    }, [])
+   useEffect(() => {
+    const loadDashboard = async () => {
+        try {
+            const { data } = await api.get('/admin/dashboard')
+            setStats(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    loadDashboard()
+}, [])
 
     return (
         <div className="flex">

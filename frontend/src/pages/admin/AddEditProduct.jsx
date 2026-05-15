@@ -42,10 +42,29 @@ function AddEditProduct() {
     }, [id])
 
     useEffect(() => {
-        if (isEdit && id) {
-            fetchProduct()
+    if (!isEdit || !id) return
+
+    const loadProduct = async () => {
+        try {
+            const res = await api.get(`/products/${id}`)
+            const p = res.data
+
+            setForm({
+                title: p.title || '',
+                description: p.description || '',
+                brand: p.brand || '',
+                category: p.category || '',
+                price: p.price || '',
+                stock: p.stock || '',
+                images: p.images?.length ? p.images : ['']
+            })
+        } catch (err) {
+            console.log(err)
         }
-    }, [isEdit, id, fetchProduct])
+    }
+
+    loadProduct()
+}, [id, isEdit])
 
     // ---------------- HANDLERS ----------------
     const changeHandler = (e) => {
