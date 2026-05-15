@@ -8,25 +8,31 @@ function ManageProducts() {
 
     const [products, setProducts] = useState([])
 
-    // ✅ SINGLE CLEAN FUNCTION
-    const fetchProducts = async () => {
-        try {
-            const { data } = await api.get('/products')
-            setProducts(data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    // ✅ USE EFFECT
+    // ---------------- LOAD PRODUCTS ----------------
     useEffect(() => {
-        fetchProducts()
+
+        const loadProducts = async () => {
+            try {
+                const { data } = await api.get('/products')
+                setProducts(data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        loadProducts()
+
     }, [])
 
+    // ---------------- DELETE PRODUCT ----------------
     const deleteProduct = async (id) => {
         try {
             await api.delete(`/products/${id}`)
-            fetchProducts()
+
+            // refresh list safely
+            const { data } = await api.get('/products')
+            setProducts(data)
+
         } catch (error) {
             console.log(error)
         }
