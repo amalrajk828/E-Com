@@ -1,46 +1,19 @@
-import {
-    Navigate
-} from
-'react-router-dom'
+import { Navigate } from "react-router-dom";
 
-import {
-    useSelector
-} from
-'react-redux'
+import { useSelector } from "react-redux";
 
-function AdminRoute({
-    children
-}) {
+function AdminRoute({ children }) {
+  const user = useSelector((state) => state.auth.user);
 
-    const user =
-        useSelector(
-            state =>
-                state.auth.user
-        )
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
 
-    if (!user) {
+  if (user.role !== "admin") {
+    return <Navigate to="/" />;
+  }
 
-        return (
-            <Navigate
-                to='/login'
-            />
-        )
-    }
-
-    if (
-        user.role !==
-        'admin'
-    ) {
-
-        return (
-            <Navigate
-                to='/'
-            />
-        )
-    }
-
-    return children
+  return children;
 }
 
-export default
-AdminRoute
+export default AdminRoute;

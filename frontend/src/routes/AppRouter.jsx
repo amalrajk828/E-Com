@@ -1,132 +1,123 @@
-import { Routes,Route} from 'react-router-dom'
+import { Routes, Route } from "react-router-dom";
 
-import Login from '../pages/Login'
-import Register from '../pages/Register'
-import ProductList from '../pages/ProductList'
-import ProductDetail from '../pages/ProductDetail'
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import ProductList from "../pages/ProductList";
+import ProductDetail from "../pages/ProductDetail";
 
-import Dashboard from '../pages/admin/Dashboard'
-import ManageProducts from '../pages/admin/ManageProducts'
-import ManageUsers from '../pages/admin/ManageUsers'
-import ManageOrders from '../pages/admin/ManageOrders'
-import Cart from '../pages/Cart'
-import AddEditProduct from '../pages/admin/AddEditProduct'
-import Wishlist from '../pages/Wishlist'
-import ProtectedRoute from './ProtectedRoute'
-import AdminRoute from './AdminRoute'
+import Dashboard from "../pages/admin/Dashboard";
+import ManageProducts from "../pages/admin/ManageProducts";
+import ManageUsers from "../pages/admin/ManageUsers";
+import ManageOrders from "../pages/admin/ManageOrders";
+import Cart from "../pages/Cart";
+import AddEditProduct from "../pages/admin/AddEditProduct";
+import Wishlist from "../pages/Wishlist";
+import ProtectedRoute from "./ProtectedRoute";
+import AdminRoute from "./AdminRoute";
 
 function AppRouter() {
+  return (
+    <Routes>
+      {/* AUTH */}
 
-    return (
-        <Routes>
+      <Route path="/" element={<Login />} />
 
-            {/* AUTH */}
+      <Route path="/register" element={<Register />} />
 
-            <Route
-                path='/'
-                element={<Login />}
-            />
+      {/* PRODUCTS */}
 
-            <Route
-                path='/register'
-                element={<Register />}
-            />
+      <Route
+        path="/products"
+        element={
+          <ProtectedRoute>
+            <ProductList />
+          </ProtectedRoute>
+        }
+      />
 
-            {/* PRODUCTS */}
+      <Route
+        path="/product/:id"
+        element={
+          <ProtectedRoute>
+            <ProductDetail />
+          </ProtectedRoute>
+        }
+      />
 
-            <Route
-                path='/products'
-                element={
-                    <ProtectedRoute>
-                        <ProductList />
-                    </ProtectedRoute>
-                }
-            />
+      {/* CART */}
 
-            <Route
-                path='/product/:id'
-                element={
-                    <ProtectedRoute>
-                        <ProductDetail />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/cart"
+        element={
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        }
+      />
 
-            {/* CART */}
+      {/* WISHLIST */}
 
-            <Route
-                path='/cart'
-                element={
-                    <ProtectedRoute>
-                        <Cart />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/wishlist"
+        element={
+          <ProtectedRoute>
+            <Wishlist />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <Dashboard />
+          </AdminRoute>
+        }
+      />
 
-            {/* WISHLIST */}
+      <Route
+        path="/admin/products"
+        element={
+          <AdminRoute>
+            <ManageProducts />
+          </AdminRoute>
+        }
+      />
 
-            <Route
-                path='/wishlist'
-                element={
-                    <ProtectedRoute>
-                        <Wishlist />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path="/admin"
-                element={
-                    <AdminRoute>
-                        <Dashboard />
-                    </AdminRoute>
-                }
-            />
+      <Route
+        path="/admin/users"
+        element={
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        }
+      />
 
-            <Route
-                path="/admin/products"
-                element={
-                    <AdminRoute>
-                        <ManageProducts />
-                    </AdminRoute>
-                }
-            />
-
-            <Route
-                path="/admin/users"
-                element={
-                    <AdminRoute>
-                        <ManageUsers />
-                    </AdminRoute>
-                }
-            />
-
-            <Route
-                path="/admin/orders"
-                element={
-                    <AdminRoute>
-                        <ManageOrders />
-                    </AdminRoute>
-                }
-            />
-            <Route
-                path="/admin/products/add"
-                element={
-                    <AdminRoute>
-                        <AddEditProduct />
-                    </AdminRoute>
-                }
-            />
-            <Route
-                path="/admin/products/edit/:id"
-                element={
-                    <AdminRoute>
-                        <AddEditProduct />
-                    </AdminRoute>
-                }
-            />
-
-        </Routes>
-    )
+      <Route
+        path="/admin/orders"
+        element={
+          <AdminRoute>
+            <ManageOrders />
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/admin/products/add"
+        element={
+          <AdminRoute>
+            <AddEditProduct />
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/admin/products/edit/:id"
+        element={
+          <AdminRoute>
+            <AddEditProduct />
+          </AdminRoute>
+        }
+      />
+    </Routes>
+  );
 }
 
-export default AppRouter
+export default AppRouter;

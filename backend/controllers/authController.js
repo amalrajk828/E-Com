@@ -49,7 +49,7 @@ const register = async (req, res) => {
             message: error.message
         });
     }
-};
+}; 
 
 // Login
 const login = async (req, res) => {
